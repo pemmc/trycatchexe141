@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Globalization;
 
+using System.IO;
+
 namespace trycatchexe141
 {
     class Program
@@ -47,6 +49,35 @@ namespace trycatchexe141
                 Console.WriteLine("Entrada de dados no formatao errado: " + e.Message);
             }
 
+            finally
+            {
+                Console.WriteLine("Independente de ter dado certo ou não, será excecutado");
+
+            }
+
+            FileStream fs = null;
+            try
+            {
+                fs = new FileStream("data.txt", FileMode.Open);
+                StreamReader sr = new StreamReader(fs);
+                string line = sr.ReadLine();
+                Console.WriteLine(line);
+
+                Console.WriteLine("DEU CERTO!");
+            }
+            catch (FileNotFoundException e)
+            {
+                Console.WriteLine(e.Message);
+
+                Console.WriteLine("DEU ERRADOOOO!");
+            }
+            finally
+            {
+                if (fs != null)
+                {
+                    fs.Close();
+                }
+            }
         }
     }
 }
